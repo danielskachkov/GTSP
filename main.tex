@@ -1,0 +1,67 @@
+\documentclass{article}
+ 
+%Russian-specific packages
+%--------------------------------------
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+%--------------------------------------
+ 
+%Hyphenation rules
+%--------------------------------------
+\usepackage{hyphenat}
+\hyphenation{ма-те-ма-ти-ка вос-ста-нав-ли-вать}
+%--------------------------------------
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+%\newtheorem{theorem}{Theorem}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+%--------------------------------------
+\usepackage{graphicx}
+\usepackage[options ]{algorithm2e}
+\usepackage[ruled,vlined]{algorithm2e}
+
+\usepackage{float}
+\restylefloat{table}
+ 
+\begin{document}
+ 
+\tableofcontents
+
+\begin{abstract}
+  TODO
+\end{abstract}
+\section{Problem statement}
+$(G, k) \in \Sigma^* \iff \exists (v_1, ..., v_m) \in V^*: (v_1 = v_m, \ \forall v \in V \ \exists i \ v = v_i, \ \forall i: (v_i, v_{i + 1}) \in E, \ \sum \limits_{i = 1}^{m - 1} w(v_i, v_{i + 1}) \leq k)$
+
+\section{Reduction rules}
+\begin{enumerate}
+    \item If $(v_i, v_j)$ is a leaf ($deg(v_j) = 1$), then $G' := (V - \{v_j\}, E - \{(v_i, v_j)\}), \ k' := k - 2w(v_i, v_j)$
+    \item If $(v_i, v_j)$ is a bridge, then $G' := (V - \{v_j\}, E - \{(v_i, v_j)\}) + \{(v_i, u) | \ u \in N(v_j)\}), \ k' := k - 2w(v_i, v_j)$
+    \item (???) (only for unweighted graphs) If $v$ is an articulation point, $G' := (V - \{v\}, E - E(v) + \{(v_i, v_j)| \ v_i, v_j \in N(v), \ \forall path(v_i, v_j) \ v \in path \}), \ k' := k - 2r$, where $r$ is the number of components in graph $G$ after deleting $v$.
+    \item If $(v_1, ..., v_m)$ is a chain and $w(v_i, v_{i + 1}) \geq w(v_j, v_{j + 1}) \forall j$, than $G' = (V - \{v_2, ..., v_{m - 1}\} + \{v_i, v_{i + 1}, E - \{(v_j, v_{j + 1})\} + \{(v_1, v_i), (v_i, v_{i+1}), (v_{i + 1}, v_m)\}), \ k' := k$
+\end{enumerate}
+
+\section{Kernel size}
+\begin{theorem}
+The kernel has a polynomial size due to F parameter.
+\end{theorem}
+
+\section{Kernel due to other parameters}
+\begin{theorem}
+There is no kernel of polynomial size due to [...] parameter(s).
+\end{theorem}
+Idea: (unweighted case) given $(G_1, ..., G_n)$ connect them in a cycle. The new graph has a GTSP solution of length  $\leq n + \sum \limits_{i} |V(G_i)|$ \iff $\forall i \ G_i$ has a hamiltonian cycle.
+
+\section{Literature}
+[1] 
+
+\end{document}
